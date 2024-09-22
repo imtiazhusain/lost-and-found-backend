@@ -31,7 +31,6 @@ try {
 
       const exist = await UserModel.exists({ email: email });
 
-      console.log('http error')
       if (exist) {
         return next(
           CustomErrorHandler.alreadyExist("This email is already taken")
@@ -301,7 +300,6 @@ const editUser = async (req:Request, res:Response, next:NextFunction) => {
       if (req?.body?.profilePic) {
         delete req.body.profilePic;
       }
-      console.log(_id)
       // validation
       const isValidID = mongoose.Types.ObjectId.isValid(_id);
 
@@ -359,7 +357,6 @@ const editUser = async (req:Request, res:Response, next:NextFunction) => {
         try {
           
       const result = await cloudinary.uploader.destroy(extractPublicId(postPreviousData.profilePic));
-      console.log('Delete result:', result);
       if (result.result === 'ok') {
       console.log('File deleted successfully from cloundinary');
       } else {

@@ -85,8 +85,7 @@ const allPosts = async (req:Request,res:Response,next:NextFunction)=>{
       city?: string;
     };
 
-    console.log(status);
-    console.log(time);
+    
 
     // Constructing the query object
     const query: IAllPostQuery = {
@@ -116,24 +115,6 @@ const allPosts = async (req:Request,res:Response,next:NextFunction)=>{
 
 const userPosts = async (req:Request,res:Response,next:NextFunction)=>{
   try {
-//     const status = req.query.status as string | undefined; // Type assertion to simplify
-// const time = req.query.time as string | undefined; // Type assertion to simplify
-
-//     console.log(status)
-//     console.log(time)
-//     const _req = req as IAuthRequest
-
-    // const query:IQuery={
-    //   author:_req._id
-    // }
-
-//     if(status){
-//       query.status= status
-//     }
-
-    
-
-//     const posts = await PostModel.find(query).populate({path:'author',select:'name profilePic country city email phoneNo'}).select('-__v').sort({createdAt: time === 'Latest' ? -1 : 1})
 
 
 
@@ -204,7 +185,6 @@ const editPost =async(req:Request,res:Response,next:NextFunction)=>{
         if (!params._id) {
         return next(createHttpError(403,"Post ID is missing"));
       }
-      console.log(req.body)
         const image = req?.file?.filename;
 
       const { description,status,country,city } = req.body;
@@ -232,7 +212,6 @@ const editPost =async(req:Request,res:Response,next:NextFunction)=>{
 
       
 
-      console.log(req?.file?.filename)
       let uploadResult:UploadApiResponse | undefined
        if(req?.file){
         try {
@@ -260,7 +239,6 @@ const editPost =async(req:Request,res:Response,next:NextFunction)=>{
         try {
           
     const result = await cloudinary.uploader.destroy(extractPublicId(postPreviousData.image));
-    console.log('Delete result:', result);
     if (result.result === 'ok') {
       console.log('File deleted successfully from cloundinary');
     } else {
@@ -274,7 +252,6 @@ const editPost =async(req:Request,res:Response,next:NextFunction)=>{
         }
 
 
-        console.log('working,,,,,,,')
 
          const postUpdatedData:IPostUpdateData = {
         description,
@@ -292,13 +269,12 @@ const editPost =async(req:Request,res:Response,next:NextFunction)=>{
 
       
 
-      const updatedPost = await PostModel.findByIdAndUpdate(
+       await PostModel.findByIdAndUpdate(
         params._id,
         postUpdatedData,
         { new: true } // Return the updated document
       );
 
-     console.log(updatedPost)
       
 
       
