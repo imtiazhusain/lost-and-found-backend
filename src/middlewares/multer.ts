@@ -2,7 +2,7 @@ import multer from "multer";
 import path from "path";
 // using multer for uploading images of items
 const storage = multer.diskStorage({
-  destination: "../public/uploads/",
+  destination: "./public/uploads/",
   filename: (req, file, cb) => {
     cb(
       null,
